@@ -1,0 +1,215 @@
+--create a new table for the time 2020/04 to 2021/03 from the raw monthly CSV file
+--time difference have in negative, hence assume that the start and end was swap(abs was used)
+--Distance was calculate with ST_DISTANCE
+CREATE TABLE `singular-rope-316613.csv_capstone_202004_202104.cyclistic_202004_202103`
+AS
+SELECT
+    ride_id,
+    rideable_type, 
+    started_at, 
+    ended_at,
+    ABS(DATETIME_DIFF(ended_at, started_at, SECOND)) AS travel_time, 
+    start_station_name,
+    start_point,
+   -- start_lat, 
+   -- start_lng,
+    end_station_name,
+    end_point,
+   -- end_lat, 
+   -- end_lng,
+    ST_DISTANCE( end_point,start_point) AS geo_distance,
+    member_casual
+FROM (
+SELECT
+    ride_id,
+    rideable_type, 
+    started_at, 
+    ended_at,
+    start_station_name,
+    ST_GEOGPOINT(start_lat,start_lng) AS start_point,
+    end_station_name,
+    ST_GEOGPOINT(end_lat,end_lng) AS end_point,
+    member_casual
+FROM (
+SELECT
+    ride_id,
+    rideable_type, 
+    started_at, 
+    ended_at,
+    start_station_name,
+    start_lat, 
+    start_lng,
+    end_station_name,
+    end_lat, 
+    end_lng, 
+    member_casual
+FROM 
+`singular-rope-316613.csv_capstone_202004_202104.202004` AS month042020
+UNION ALL
+SELECT
+    ride_id,
+    rideable_type, 
+    started_at, 
+    ended_at,
+    start_station_name,
+    start_lat, 
+    start_lng,
+    end_station_name,
+    end_lat, 
+    end_lng, 
+    member_casual
+FROM 
+`singular-rope-316613.csv_capstone_202004_202104.202005` AS month052020
+UNION ALL
+SELECT
+    ride_id,
+    rideable_type, 
+    started_at, 
+    ended_at,
+    start_station_name,
+    start_lat, 
+    start_lng,
+    end_station_name,
+    end_lat, 
+    end_lng, 
+    member_casual
+FROM 
+`singular-rope-316613.csv_capstone_202004_202104.202006` AS month062020
+UNION ALL
+SELECT
+    ride_id,
+    rideable_type, 
+    started_at, 
+    ended_at,
+    start_station_name,
+    start_lat, 
+    start_lng,
+    end_station_name,
+    end_lat, 
+    end_lng, 
+    member_casual
+FROM 
+`singular-rope-316613.csv_capstone_202004_202104.202007` AS month072020
+UNION ALL
+SELECT
+    ride_id,
+    rideable_type, 
+    started_at, 
+    ended_at,
+    start_station_name,
+    start_lat, 
+    start_lng,
+    end_station_name,
+    end_lat, 
+    end_lng, 
+    member_casual
+FROM 
+`singular-rope-316613.csv_capstone_202004_202104.202008` AS month082020
+UNION ALL
+SELECT
+    ride_id,
+    rideable_type, 
+    started_at, 
+    ended_at,
+    start_station_name,
+    start_lat, 
+    start_lng,
+    end_station_name,
+    end_lat, 
+    end_lng, 
+    member_casual
+FROM 
+`singular-rope-316613.csv_capstone_202004_202104.202009` AS month092020
+UNION ALL
+SELECT
+    ride_id,
+    rideable_type, 
+    started_at, 
+    ended_at,
+    start_station_name,
+    start_lat, 
+    start_lng,
+    end_station_name,
+    end_lat, 
+    end_lng, 
+    member_casual
+FROM 
+`singular-rope-316613.csv_capstone_202004_202104.202010` AS month102020
+UNION ALL
+SELECT
+    ride_id,
+    rideable_type, 
+    started_at, 
+    ended_at,
+    start_station_name,
+    start_lat, 
+    start_lng,
+    end_station_name,
+    end_lat, 
+    end_lng, 
+    member_casual
+FROM 
+`singular-rope-316613.csv_capstone_202004_202104.202011` AS month112020
+UNION ALL
+SELECT
+    ride_id,
+    rideable_type, 
+    started_at, 
+    ended_at,
+    start_station_name,
+    start_lat, 
+    start_lng,
+    end_station_name,
+    end_lat, 
+    end_lng, 
+    member_casual
+FROM 
+`singular-rope-316613.csv_capstone_202004_202104.202012` AS month122020
+UNION ALL
+SELECT
+    ride_id,
+    rideable_type, 
+    started_at, 
+    ended_at,
+    start_station_name,
+    start_lat, 
+    start_lng,
+    end_station_name,
+    end_lat, 
+    end_lng, 
+    member_casual
+FROM 
+`singular-rope-316613.csv_capstone_202004_202104.202101` AS month012021
+UNION ALL
+SELECT
+    ride_id,
+    rideable_type, 
+    started_at, 
+    ended_at,
+    start_station_name,
+    start_lat, 
+    start_lng,
+    end_station_name,
+    end_lat, 
+    end_lng, 
+    member_casual
+FROM 
+`singular-rope-316613.csv_capstone_202004_202104.202102` AS month022021
+UNION ALL
+SELECT
+    ride_id,
+    rideable_type, 
+    started_at, 
+    ended_at,
+    start_station_name,
+    start_lat, 
+    start_lng,
+    end_station_name,
+    end_lat, 
+    end_lng, 
+    member_casual
+FROM 
+`singular-rope-316613.csv_capstone_202004_202104.202103` AS month032021
+))
+ORDER BY
+  started_at
