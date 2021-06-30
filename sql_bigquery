@@ -1,22 +1,18 @@
 --create a new table for the time 2020/04 to 2021/03 from the raw monthly CSV file
---time difference have in negative, hence assume that the start and end was swap(abs was used)
---Distance was calculate with ST_DISTANCE
+--negative time and zero time difference is remove as it consider as bad data
+--geography data was build suing ST_GEOGPOINT and distance was calculated with ST_DISTANCE
 CREATE TABLE `singular-rope-316613.csv_capstone_202004_202104.cyclistic_202004_202103`
 AS
 SELECT
-    ride_id,
+    ride_id
     rideable_type, 
     started_at, 
     ended_at,
-    ABS(DATETIME_DIFF(ended_at, started_at, SECOND)) AS travel_time, 
+    travel_time, 
     start_station_name,
     start_point,
-   -- start_lat, 
-   -- start_lng,
     end_station_name,
     end_point,
-   -- end_lat, 
-   -- end_lng,
     ST_DISTANCE( end_point,start_point) AS geo_distance,
     member_casual
 FROM (
@@ -25,6 +21,7 @@ SELECT
     rideable_type, 
     started_at, 
     ended_at,
+    DATETIME_DIFF(ended_at, started_at, SECOND) AS travel_time,
     start_station_name,
     ST_GEOGPOINT(start_lat,start_lng) AS start_point,
     end_station_name,
@@ -211,5 +208,7 @@ SELECT
 FROM 
 `singular-rope-316613.csv_capstone_202004_202104.202103` AS month032021
 ))
+WHERE
+travel_time > 0
 ORDER BY
   started_at
